@@ -52,7 +52,14 @@ function showCards(data){
 
 }
 
-btnBuscar.addEventListener("click", async function(){
+inputBuscar.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+    
+    buscar()
+    }
+})
+
+ async function buscar(){
    
     const url = "https://images-api.nasa.gov/search?q=" + inputBuscar.value.toLowerCase();
     
@@ -72,4 +79,4 @@ btnBuscar.addEventListener("click", async function(){
     // console.log(getJSONData);
                             }
         
-})
+}
