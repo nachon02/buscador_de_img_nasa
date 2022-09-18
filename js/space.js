@@ -1,27 +1,25 @@
-btnBuscar = document.getElementById("btnBuscar")
-inputBuscar = document.getElementById("inputBuscar")
+btnBuscar = document.getElementById("btnBuscar");
+inputBuscar = document.getElementById("inputBuscar");
 
-function showCards(data){
-    
-
+function showCards(data) {
     document.getElementById("contenedor").innerHTML = ``;
     // console.log(inputBuscar.value);
-    if(data.collection.items.length > 0){
-        if(document.getElementById("card-container")){
-            console.log('ya hay busqueda');
-        }else{
-            inputBuscar.classList.remove('is-invalid')
-        document.getElementById("alertB").classList.add("hide")
-        // console.log(data);
-        let contenido = `<div id="title" class="text-center">
-                <h2>Resultado de la búsqueda ${inputBuscar.value.toUpperCase()}</h2>
-            </div>`
-        for (let i = 0; i < data.collection.items.length; i++) {
-            const item = data.collection.items[i];
-            // console.log(item.links[0].href);
-            // console.log(item.data[0].title);
-            
-            contenido += `
+    if (data.collection.items.length > 0) {
+        if (document.getElementById("card-container")) {
+            console.log("ya hay busqueda");
+        } else {
+            inputBuscar.classList.remove("is-invalid");
+            document.getElementById("alertB").classList.add("hide");
+            // console.log(data);
+            let contenido = `<div id="title" class="text-center">
+                <h2>Resultados de la búsqueda ${inputBuscar.value.toUpperCase()}</h2>
+            </div>`;
+            for (let i = 0; i < data.collection.items.length; i++) {
+                const item = data.collection.items[i];
+                // console.log(item.links[0].href);
+                // console.log(item.data[0].title);
+
+                contenido += `
 
             <div class="col-md-4 scale">
             <div id="card-container" class="card mb-4 shadow-sm custom-card cursor-active card_hover"> 
@@ -38,45 +36,40 @@ function showCards(data){
                 </div>    
             </div>
             </div>
-            `
-            document.getElementById("contenedor").innerHTML = contenido;
+            `;
+                document.getElementById("contenedor").innerHTML = contenido;
+            }
         }
-    }
-    
-}else{
-    let contenido = `<div id="title" class="text-center">
+    } else {
+        let contenido = `<div id="title" class="text-center">
             <h2>No hay resultados para la búsqueda ${inputBuscar.value.toUpperCase()}</h2>
-        </div>`
+        </div>`;
         document.getElementById("contenedor").innerHTML = contenido;
-}
-
-}
-
-inputBuscar.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-    
-    buscar()
     }
-})
+}
 
- async function buscar(){
-   
-    const url = "https://images-api.nasa.gov/search?q=" + inputBuscar.value.toLowerCase();
-    
-    if(inputBuscar.value == ""){
+inputBuscar.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        buscar();
+    }
+});
+
+async function buscar() {
+    const url =
+        "https://images-api.nasa.gov/search?q=" +
+        inputBuscar.value.toLowerCase();
+
+    if (inputBuscar.value == "") {
         document.getElementById("contenedor").innerHTML = ``;
-        inputBuscar.classList.add('is-invalid')
-        document.getElementById("alertB").classList.remove("hide")
-        
-    }else{
-    
-    const getJSONData = await fetch(url)
-                                .then((response) => response.json())
-                                .catch(function (error) {
-                                    console.log(error);
-                                });
-    showCards(getJSONData);
-    // console.log(getJSONData);
-                            }
-        
+        inputBuscar.classList.add("is-invalid");
+        document.getElementById("alertB").classList.remove("hide");
+    } else {
+        const getJSONData = await fetch(url)
+            .then((response) => response.json())
+            .catch(function (error) {
+                console.log(error);
+            });
+        showCards(getJSONData);
+        // console.log(getJSONData);
+    }
 }
